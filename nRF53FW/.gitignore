@@ -1,0 +1,41 @@
+# Zephyr build output
+/build/
+/out/
+
+# Dependencies and generated files managed by west/toolchains
+/zephyr/
+/modules/
+/tools/
+/mcuboot/
+/hal_nxp/
+/hal_stm32/
+/nrf/
+/bootloader/
+*.hex
+*.bin
+*.elf
+*.map
+*.a
+
+# Configuration and toolchain files
+.west/
+.config
+.Doxyfile.local
+.cmake/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+generated/
+
+# IDE/Editor specific files (adjust as needed)
+.vscode/
+.idea/
+*.suo
+*.user
+*.ilk
+*.aps
+*.pch
+*.ipch
+_ReSharper.*/
+[Tt]humbs.db
+*.DS_Store
