@@ -11,7 +11,7 @@ import SwiftUI
 struct BLE_FFF8App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
     }
 }
