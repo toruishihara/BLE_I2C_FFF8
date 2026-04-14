@@ -5,8 +5,9 @@
 //  Created by Toru Ishihara on 2026/04/14.
 //
 
+import SwiftUI
+
 class BLEStream {
-/*
     private var continuation: AsyncStream<Data>.Continuation?
 
     lazy var stream: AsyncStream<Data> = {
@@ -22,5 +23,4 @@ class BLEStream {
     func finish() {
         continuation?.finish()
     }
- */
 }

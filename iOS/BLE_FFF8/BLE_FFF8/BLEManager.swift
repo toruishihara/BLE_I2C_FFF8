@@ -14,20 +14,15 @@ let SERVICE_UUID = CBUUID(string: "FFF8")
 let CHAR_DATA_UUID = CBUUID(string: "FFF9")
 let CHAR_CONFIG_UUID = CBUUID(string: "FFFA")
 
-class BLECentral: NSObject, ObservableObject, CBCentralManagerDelegate {
+class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
     @Published var discoveredPeripherals: [CBPeripheral] = []
     @Published var status: String = "Initializing..."
-    @Published var lastHex: String = "-"
-    @Published var lastAscii: String = "-"
-    @Published var uva: UInt16 = 0
-    @Published var uvb: UInt16 = 0
-    @Published var uvc: UInt16 = 0
+    public let stream = BLEStream()
 
     private var central: CBCentralManager!
     private var peripherals: [UUID: CBPeripheral] = [:]
     private var targetPeripheral: CBPeripheral?
     private var uvNotifyChar: CBCharacteristic?
-    private let stream = BLEStream()
     
     override init() {
         super.init()
@@ -116,7 +111,7 @@ class BLECentral: NSObject, ObservableObject, CBCentralManagerDelegate {
     }
 
 }
-extension BLECentral: CBPeripheralDelegate {
+extension BLEManager: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             status = "discoverServices error: \(error.localizedDescription)"
@@ -149,6 +144,7 @@ extension BLECentral: CBPeripheralDelegate {
         for c in chars where c.uuid == CHAR_DATA_UUID {
             uvNotifyChar = c
             status = "Characteristic found."
+            print("Characteristic found: \(c.uuid)")
             peripheral.setNotifyValue(true, for: c)
             return
         }
@@ -161,11 +157,24 @@ extension BLECentral: CBPeripheralDelegate {
 
         if let error = error {
             status = "setNotify error: \(error.localizedDescription)"
+            print(status)
             return
         }
         status = characteristic.isNotifying ? "Notify ON " : "Notify OFF"
+        print("didUpdateNotificationStateFor: \(characteristic.uuid)")
     }
 
+    func peripheral(_ peripheral: CBPeripheral,
+                    didUpdateValueFor characteristic: CBCharacteristic,
+                    error: Error?) {
+        status = "Notified"
+        print("didUpdateValueFor: \(characteristic.uuid)")
+        if let data = characteristic.value {
+            stream.yield(data)
+        }
+    }
+
+    /*
     func peripheral(_ peripheral: CBPeripheral,
                     didUpdateValueFor characteristic: CBCharacteristic,
                     error: Error?) {
@@ -193,5 +202,6 @@ extension BLECentral: CBPeripheralDelegate {
         // For debug
         print("Notify: \(lastHex)")
     }
+     */
 }
 

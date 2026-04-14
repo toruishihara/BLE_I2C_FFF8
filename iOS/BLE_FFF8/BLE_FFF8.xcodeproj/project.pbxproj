@@ -10,22 +10,9 @@
 		1CC51E422F8DCBF200E4251C /* BLE_FFF8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLE_FFF8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		1CC51E5F2F8DE00000E4251C /* Exceptions for "BLE_FFF8" folder in "BLE_FFF8" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"BLE-FFF8-Info.plist",
-			);
-			target = 1CC51E412F8DCBF200E4251C /* BLE_FFF8 */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		1CC51E442F8DCBF200E4251C /* BLE_FFF8 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				1CC51E5F2F8DE00000E4251C /* Exceptions for "BLE_FFF8" folder in "BLE_FFF8" target */,
-			);
 			path = BLE_FFF8;
 			sourceTree = "<group>";
 		};
