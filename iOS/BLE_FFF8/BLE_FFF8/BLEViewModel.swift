@@ -18,6 +18,7 @@ class BLEViewModel: ObservableObject {
     @Published var lastAscii: String = "-"
 
     private let bleManager: BLEManager
+    private let db = UVDatabase()
     private var task: Task<Void, Never>?
 
     init() {
@@ -44,6 +45,9 @@ class BLEViewModel: ObservableObject {
                     uva = UInt16(bytes[2]) | (UInt16(bytes[3]) << 8)
                     uvb = UInt16(bytes[6]) | (UInt16(bytes[7]) << 8)
                     uvc = UInt16(bytes[10]) | (UInt16(bytes[11]) << 8)
+                    
+                    // Insert into DB
+                    db.insertUVData(uva: uva, uvb: uvb, uvc: uvc)
                 }
             }
         }
@@ -52,5 +56,10 @@ class BLEViewModel: ObservableObject {
     func stopListening() {
         task?.cancel()
         task = nil
+    }
+    
+    func disconnect() {
+        bleManager.disconnect()
+        db.printAllRecord()
     }
 }

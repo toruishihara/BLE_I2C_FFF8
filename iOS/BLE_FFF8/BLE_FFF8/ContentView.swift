@@ -59,8 +59,7 @@ struct ContentView: View {
 
             HStack {
                 Button("Disconnect") {
-                    // You might want to add a disconnect method to BLEViewModel
-                    // vm.disconnect()
+                    vm.disconnect()
                 }
             }
             .padding(.top, 8)

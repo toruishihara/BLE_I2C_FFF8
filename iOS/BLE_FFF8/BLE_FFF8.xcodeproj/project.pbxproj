@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1CC51E772F8DFE5A00E4251C /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 1CC51E762F8DFE5A00E4251C /* SQLite */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1CC51E422F8DCBF200E4251C /* BLE_FFF8.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BLE_FFF8.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CC51E772F8DFE5A00E4251C /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = BLE_FFF8;
 			packageProductDependencies = (
+				1CC51E762F8DFE5A00E4251C /* SQLite */,
 			);
 			productName = BLE_FFF8;
 			productReference = 1CC51E422F8DCBF200E4251C /* BLE_FFF8.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 1CC51E392F8DCBF200E4251C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1CC51E752F8DFE5A00E4251C /* XCRemoteSwiftPackageReference "SQLite" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1CC51E432F8DCBF200E4251C /* Products */;
 			projectDirPath = "";
@@ -336,6 +345,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1CC51E752F8DFE5A00E4251C /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.16.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1CC51E762F8DFE5A00E4251C /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1CC51E752F8DFE5A00E4251C /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1CC51E3A2F8DCBF200E4251C /* Project object */;
 }
