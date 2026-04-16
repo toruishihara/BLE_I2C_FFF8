@@ -249,7 +249,7 @@ int main(void)
 		for (j=0;j<100;++j) {
 			k_msleep(10);
 			ret = i2c_write_read(i2c_dev, AS7331_ADDR, &reg, 1, &state, 2);
-			//printk("AS7331_ADDR Sensor state = 0x%04X j=%d\n", state, j);
+			printk("AS7331_ADDR Sensor state = 0x%04X j=%d\n", state, j);
 			if ((state & 0x0800) != 0) { // check NDATA bit on STATUS for measurement complete
 				break;
 			}
@@ -263,7 +263,7 @@ int main(void)
                         0x02,   // MRES1
                         buf,
                         6);
-
+		printk("i2c_burst_read=%02x %02x %02x %02x %02x %02x\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
 		if (rc == 0) {
     		uint16_t uva = buf[0] | (buf[1] << 8);
     		uint16_t uvb = buf[2] | (buf[3] << 8);

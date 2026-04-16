@@ -1,15 +1,13 @@
 //
-//  ContentView.swift
+//  BLEView.swift
 //  BLE_FFF8
 //
 //  Created by Toru Ishihara on 2026/04/14.
 //
-
 import SwiftUI
 
-struct ContentView: View {
-    @StateObject var vm = BLEViewModel()
-
+struct BLEView: View {
+    @ObservedObject var vm: BLEViewModel
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("BLE App for FFF8")
@@ -67,8 +65,4 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
     }
-}
-
-#Preview {
-    ContentView()
 }

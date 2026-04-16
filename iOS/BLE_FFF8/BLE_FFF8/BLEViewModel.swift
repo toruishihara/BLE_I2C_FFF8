@@ -48,6 +48,8 @@ class BLEViewModel: ObservableObject {
                     
                     // Insert into DB
                     db.insertUVData(uva: uva, uvb: uvb, uvc: uvc)
+                    
+                    print("\(Date()): \(uva) \(uvb) \(uvc)")
                 }
             }
         }

@@ -9,93 +9,26 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject var vm = BLEViewModel()
+    @StateObject var bleVewModel = BLEViewModel()
+    @StateObject var uvViewModel = UVViewModel()
 
     var body: some View {
         TabView {
-            BLEView(vm: vm)
+            BLEView(vm: bleVewModel)
                 .tabItem {
                     Label("BLE", systemImage: "dot.radiowaves.left.and.right")
                 }
 
-            GraphView(vm: vm)
+            GraphView(uvViewModel: uvViewModel)
                 .tabItem {
                     Label("Graph", systemImage: "chart.line.uptrend.xyaxis")
                 }
 
-            SettingsView(vm: vm)
+            SettingsView(vm: bleVewModel)
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
         }
-    }
-}
-
-struct BLEView: View {
-    @ObservedObject var vm: BLEViewModel
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("BLE App for FFF8")
-                .font(.title)
-            Button("Scan & Connect") {
-                print("Tapped Scan & Connect")
-                vm.startScan()
-            }
-            .padding(.vertical, 12)
-            .padding(.horizontal, 20)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.blue)
-            )
-            .foregroundColor(.white)
-
-            Spacer()
-
-            Text("Status: \(vm.status)")
-                .font(.headline)
-
-            Group {
-                HStack {
-                    Text("UVA:")
-                    Text("\(vm.uva, specifier: "%d")")
-                        .font(.largeTitle)
-                }
-                HStack {
-                    Text("UVB:")
-                    Text("\(vm.uvb, specifier: "%d")")
-                        .font(.largeTitle)
-                }
-                HStack {
-                    Text("UVC:")
-                    Text("\(vm.uvc, specifier: "%d")")
-                        .font(.largeTitle)
-                }
-            }
-
-            VStack(alignment: .leading) {
-                Text("Last HEX:")
-                    .font(.caption)
-                Text(vm.lastHex)
-                    .font(.system(.body, design: .monospaced))
-            }
-            .padding(.top, 8)
-
-            HStack {
-                Button("Disconnect") {
-                    vm.disconnect()
-                }
-            }
-            .padding(.top, 8)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-    }
-}
-
-struct GraphView: View {
-    @ObservedObject var vm: BLEViewModel
-    var body: some View {
-        Text("Graph Screen")
     }
 }
 

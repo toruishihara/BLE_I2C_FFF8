@@ -1,6 +1,10 @@
 # BLE_I2C_FFF8
 Bluetooth Low Energy Data Viewer app with UUID:FFF8-FFFA
 
+| Screenshot 1 | Screenshot 2 |
+|--------|--------|
+| ![](images/UV1.jpg) | ![](images/UV2.jpg) |
+
 ```
 Service UUID : 0xFFF8
 Value notify characteristic UUID : 0xFFF9
@@ -19,9 +23,16 @@ Value ID
 |0x16|Light UVB             |UInt16   |UVB light   |
 |0x17|Light UVC             |UInt16   |UVC light   |
 
-Data format
+Notify data format
 | ID(UInt8) | Length(UInt8) | Data(Variable len) | ID | Length | Data |...
 Use little endian
+
+Config commands 
+|ID|Name|
+|----|-----------|
+|0x11|Read value|
+|0x12|Read result|
+|0x13|Write value|
 
 Config ID
 |ID|Name|Datatype|Description|
@@ -32,6 +43,10 @@ Config ID
 |0xC3|Data send interval       |UInt32|Seconds                |
 |0xC4|Data send interval       |UInt32|Micro seconds          |
 |0xC5|Power off timer          |UInt32|power off timer seconds|
+
+Config data format
+| CMD(UInt8) | ID(UInt8) | Length(UInt8) | Data(Variable len) | CMD | ID | Length | Data |...
+Use little endian
 
 nRF5340 I2C PIN connection
 | AS7331 Pin | nRF5340-DK Connection | Description |

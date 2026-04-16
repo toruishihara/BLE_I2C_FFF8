@@ -43,6 +43,31 @@ class UVDatabase {
         try! db.run(insert)
     }
     
+    func fetchLastHour() -> [(Date, UInt16, UInt16, UInt16)] {
+        let oneHourAgo = Date().addingTimeInterval(-3600)
+
+        var result: [(Date, UInt16, UInt16, UInt16)] = []
+
+        do {
+            let query = table
+                .filter(timestamp >= oneHourAgo)
+                .order(timestamp.asc)
+
+            for row in try db.prepare(query) {
+                result.append((
+                    row[timestamp],
+                    UInt16(row[uva]),
+                    UInt16(row[uvb]),
+                    UInt16(row[uvc])
+                ))
+            }
+        } catch {
+            print("DB fetch error:", error)
+        }
+
+        return result
+    }
+    
     func printAllRecord() {
         do {
             for row in try db.prepare(table) {
