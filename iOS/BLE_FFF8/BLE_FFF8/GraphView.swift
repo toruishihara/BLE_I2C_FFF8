@@ -13,6 +13,15 @@ struct GraphView: View {
 
     var body: some View {
         VStack {
+            Picker("Time Range", selection: $uvViewModel.selectedHours) {
+                Text("10min").tag(10.0 / 60.0)
+                Text("1h").tag(1.0)
+                Text("4h").tag(4.0)
+                Text("12h").tag(12.0)
+            }
+            .pickerStyle(.segmented)
+            .padding()
+
             Text("UVA")
             Chart {
                 ForEach(uvViewModel.points) { point in
@@ -48,7 +57,7 @@ struct GraphView: View {
             }
         }
         .onAppear {
-            uvViewModel.loadLastHour()
+            uvViewModel.loadData()
         }
     }
 }

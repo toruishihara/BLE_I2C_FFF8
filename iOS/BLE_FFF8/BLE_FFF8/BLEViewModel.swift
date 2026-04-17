@@ -20,6 +20,12 @@ class BLEViewModel: ObservableObject {
     private let bleManager: BLEManager
     private let db = UVDatabase()
     private var task: Task<Void, Never>?
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter
+    }()
 
     init() {
         self.bleManager = BLEManager()
@@ -33,6 +39,9 @@ class BLEViewModel: ObservableObject {
     func startListening() {
         task = Task {
             for await data in bleManager.stream.stream {
+                // Update status with current time
+                status = "Last update: \(dateFormatter.string(from: Date()))"
+
                 // Convert Data to [UInt8] (Byte Array)
                 let bytes = [UInt8](data)
                 

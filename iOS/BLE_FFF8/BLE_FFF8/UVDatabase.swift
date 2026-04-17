@@ -43,14 +43,14 @@ class UVDatabase {
         try! db.run(insert)
     }
     
-    func fetchLastHour() -> [(Date, UInt16, UInt16, UInt16)] {
-        let oneHourAgo = Date().addingTimeInterval(-3600)
+    func fetchLast(hours: Double) -> [(Date, UInt16, UInt16, UInt16)] {
+        let startTime = Date().addingTimeInterval(-hours * 3600)
 
         var result: [(Date, UInt16, UInt16, UInt16)] = []
 
         do {
             let query = table
-                .filter(timestamp >= oneHourAgo)
+                .filter(timestamp >= startTime)
                 .order(timestamp.asc)
 
             for row in try db.prepare(query) {
