@@ -9,12 +9,13 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject var bleVewModel = BLEViewModel()
+    @StateObject var bleViewModel = BLEViewModel()
     @StateObject var uvViewModel = UVViewModel()
+    @StateObject var bleConfigViewModel = BLEConfigViewModel()
 
     var body: some View {
         TabView {
-            BLEView(vm: bleVewModel)
+            BLEView(vm: bleViewModel)
                 .tabItem {
                     Label("BLE", systemImage: "dot.radiowaves.left.and.right")
                 }
@@ -24,7 +25,7 @@ struct MainView: View {
                     Label("Graph", systemImage: "chart.line.uptrend.xyaxis")
                 }
 
-            SettingsView(vm: bleVewModel)
+            SettingsView(vm: bleConfigViewModel)
                 .tabItem {
                     Label("Settings", systemImage: "gearshape")
                 }
@@ -32,9 +33,3 @@ struct MainView: View {
     }
 }
 
-struct SettingsView: View {
-    @ObservedObject var vm: BLEViewModel
-    var body: some View {
-        Text("Settings Screen")
-    }
-}

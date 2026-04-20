@@ -1,0 +1,129 @@
+{
+  "" : {
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8-primary.dia",
+    "emit-module-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8-primary-emit-module.dia",
+    "pch" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8-primary.swiftdeps"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/BLEConfigViewModel.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEConfigViewModel~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/BLEManager.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEManager~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/BLEStream.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEStream~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/BLEView.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEView~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/BLEViewModel.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLEViewModel~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/BLE_FFF8App.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/BLE_FFF8App~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/GraphView.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GraphView~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/MainView.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/MainView~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/SettingsView.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/SettingsView~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/UVDatabase.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVDatabase~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/BLE_FFF8/UVViewModel.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/UVViewModel~partial.swiftmodule"
+  },
+  "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/torui/ncs/git/BLE_I2C_FFF8/iOS/BLE_FFF8/build/BLE_FFF8.build/Debug-iphoneos/BLE_FFF8.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  }
+}

@@ -8,21 +8,29 @@
 import Foundation
 import SwiftUI
 import CoreBluetooth
-internal import Combine
+import Combine
 
 let SERVICE_UUID = CBUUID(string: "FFF8")
 let CHAR_DATA_UUID = CBUUID(string: "FFF9")
 let CHAR_CONFIG_UUID = CBUUID(string: "FFFA")
 
 class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
+    static let shared = BLEManager()
+    
     @Published var discoveredPeripherals: [CBPeripheral] = []
     @Published var status: String = "Initializing..."
+    @Published var receivedConfigBytes: Data?
     public let stream = BLEStream()
 
     private var central: CBCentralManager!
     private var peripherals: [UUID: CBPeripheral] = [:]
     private var targetPeripheral: CBPeripheral?
     private var uvNotifyChar: CBCharacteristic?
+    private var configChar: CBCharacteristic?
+    
+    private var readContinuation: CheckedContinuation<Data, Never>?
+    private var writeContinuation: CheckedContinuation<Void, Never>?
+    private var notifyContinuations: [CBUUID: CheckedContinuation<Data, Error>] = [:]
     
     override init() {
         super.init()
@@ -51,6 +59,44 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         status = "Disconnected"
     }
 
+    func writeConfigChar(data: Data) {
+        guard let peripheral = targetPeripheral, let char = configChar else {
+            print("Write failed: peripheral or characteristic not found")
+            return
+        }
+        print("calling peripheral.writeValue char=\(char.uuid)")
+        peripheral.writeValue(data, for: char, type: .withResponse)
+    }
+
+    func writeConfigCharAsync(data: Data) async {
+        await withCheckedContinuation { continuation in
+            self.writeContinuation = continuation
+            self.writeConfigChar(data: data)
+        }
+    }
+
+    func waitNotifyAsync(for characteristic: CBCharacteristic) async throws -> Data {
+        return try await withCheckedThrowingContinuation { continuation in
+            notifyContinuations[characteristic.uuid] = continuation
+        }
+    }
+    
+    func readConfigChar() {
+        guard let peripheral = targetPeripheral, let char = configChar else {
+            print("Read failed: peripheral or characteristic not found")
+            return
+        }
+        print("calling peripheral.readValue char=\(char.uuid)")
+        peripheral.readValue(for: char)
+    }
+
+    func readConfigCharAsync() async -> Data {
+        await withCheckedContinuation { continuation in
+            self.readContinuation = continuation
+            self.readConfigChar()
+        }
+    }
+
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn:
@@ -70,9 +116,9 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate {
         rssi RSSI: NSNumber
     ) {
         let name = peripheral.name ?? "Unknown"
-        print("Found:", name)
+        print("Found:", name, " id:", peripheral.identifier)
 
-        guard name == "UV_SENSOR" else { return }
+        //guard name == "UV_SENSOR" else { return }
 
         print("Connecting to", name)
 
@@ -123,7 +169,7 @@ extension BLEManager: CBPeripheralDelegate {
         }
         for s in services where s.uuid == SERVICE_UUID {
             status = "Service found"
-            peripheral.discoverCharacteristics([CHAR_DATA_UUID], for: s)
+            peripheral.discoverCharacteristics([CHAR_DATA_UUID, CHAR_CONFIG_UUID], for: s)
             return
         }
         status = "Target service not found"
@@ -141,14 +187,18 @@ extension BLEManager: CBPeripheralDelegate {
             status = "No characteristics"
             return
         }
-        for c in chars where c.uuid == CHAR_DATA_UUID {
-            uvNotifyChar = c
-            status = "Characteristic found."
-            print("Characteristic found: \(c.uuid)")
-            peripheral.setNotifyValue(true, for: c)
-            return
+        for c in chars {
+            if c.uuid == CHAR_DATA_UUID {
+                uvNotifyChar = c
+                print("Data characteristic found: \(c.uuid)")
+                peripheral.setNotifyValue(true, for: c)
+            } else if c.uuid == CHAR_CONFIG_UUID {
+                configChar = c
+                print("Config characteristic found: \(c.uuid)")
+                peripheral.setNotifyValue(true, for: c)
+            }
         }
-        status = "Target characteristic not found"
+        status = "Characteristics found"
     }
 
     func peripheral(_ peripheral: CBPeripheral,
@@ -167,41 +217,37 @@ extension BLEManager: CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral,
                     didUpdateValueFor characteristic: CBCharacteristic,
                     error: Error?) {
-        status = "Notified"
+        status = "Value updated"
         print("didUpdateValueFor: \(characteristic.uuid)")
-        if let data = characteristic.value {
-            stream.yield(data)
-        }
-    }
-
-    /*
-    func peripheral(_ peripheral: CBPeripheral,
-                    didUpdateValueFor characteristic: CBCharacteristic,
-                    error: Error?) {
-
+        
         if let error = error {
-            status = "Notify update error: \(error.localizedDescription)"
+            notifyContinuations[characteristic.uuid]?.resume(throwing: error)
+            notifyContinuations.removeValue(forKey: characteristic.uuid)
             return
         }
-        guard let data = characteristic.value else { return }
 
-
-        // Show HEX
-        lastHex = data.map { String(format: "%02X", $0) }.joined(separator: " ")
-
-        uva = UInt16(littleEndian: data.withUnsafeBytes {
-            $0.load(fromByteOffset: 2, as: UInt16.self)
-        })
-        uvb = UInt16(littleEndian: data.withUnsafeBytes {
-            $0.load(fromByteOffset: 6, as: UInt16.self)
-        })
-        uvc = UInt16(littleEndian: data.withUnsafeBytes {
-            $0.load(fromByteOffset: 10, as: UInt16.self)
-        })
-
-        // For debug
-        print("Notify: \(lastHex)")
+        if let data = characteristic.value {
+            if characteristic.uuid == CHAR_DATA_UUID {
+                stream.yield(data, uuid: characteristic.uuid)
+            }
+            if characteristic.uuid == CHAR_CONFIG_UUID {
+                DispatchQueue.main.async {
+                    self.receivedConfigBytes = data
+                }
+                readContinuation?.resume(returning: data)
+                readContinuation = nil
+            }
+            
+            notifyContinuations[characteristic.uuid]?.resume(returning: data)
+            notifyContinuations.removeValue(forKey: characteristic.uuid)
+        }
     }
-     */
+
+    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
+        if characteristic.uuid == CHAR_CONFIG_UUID {
+            writeContinuation?.resume(returning: ())
+            writeContinuation = nil
+        }
+    }
 }
 

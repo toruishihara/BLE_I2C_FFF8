@@ -13,6 +13,8 @@
 #include <zephyr/bluetooth/conn.h>
 #include <zephyr/bluetooth/gatt.h>
 #include <zephyr/bluetooth/hci.h>
+#include <zephyr/settings/settings.h>
+#include "settings.h"
 
 #define APP_FW_VERSION "0.1.0"
 #define I2C_NODE DT_NODELABEL(i2c1)
@@ -31,6 +33,8 @@ static struct bt_conn *current_conn;
 static bool notify_enabled;
 
 static struct k_work_delayable adv_restart_work;
+
+extern const struct bt_gatt_service_static ble_svc;
 
 static int adv_start(void);
 
@@ -81,6 +85,19 @@ BT_CONN_CB_DEFINE(conn_cb) = {
 static uint8_t data_payload[20];
 static uint8_t config_payload[20];
 
+static ssize_t read_config(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+			 void *buf, uint16_t len, uint16_t offset)
+{
+	printk("read_config (len %u): ", len);
+	for (int i = 0; i < len; i++) {
+		printk("%02X ", ((uint8_t *)buf)[i]);
+	}
+	printk("\n");
+
+	return bt_gatt_attr_read(conn, attr, buf, len, offset, config_payload,
+				 sizeof(config_payload));
+}
+
 static ssize_t write_config(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 			 const void *buf, uint16_t len, uint16_t offset,
 			 uint8_t flags)
@@ -90,11 +107,48 @@ static ssize_t write_config(struct bt_conn *conn, const struct bt_gatt_attr *att
 	}
 
 	memcpy(config_payload + offset, buf, len);
-	printk("Config written (len %u): ", len);
+	printk("Central write or ask config (len %u): ", len);
 	for (int i = 0; i < len; i++) {
 		printk("%02X ", ((uint8_t *)buf)[i]);
 	}
 	printk("\n");
+	uint8_t cmd = config_payload[0];
+	uint8_t id = config_payload[1];
+
+	if (cmd == 0x11) {// Read value
+		uint8_t payload_len = 0;
+		uint8_t len = 0;
+		config_payload[0] = 0x12; // Read result
+		if (id == 0xc0) {
+			// return device_name setting
+			char device_name[32];
+			load_setting_str("app/device_name", device_name, sizeof(device_name));
+			printk("device_name: %s\n", device_name);
+			len = strlen(device_name);
+			config_payload[1] = id;
+			config_payload[2] = len;
+			memcpy(config_payload + 3, device_name, len);
+			payload_len = 3 + len;
+		} else if (id == 0xc3) {
+			// return interval_seconds setting
+			int interval_sec;
+			len = 2;
+			load_setting_int("app/interval_seconds", &interval_sec);
+			config_payload[1] = id;
+			config_payload[2] = len;
+			config_payload[3] = (uint8_t)(interval_sec & 0xFF);
+			config_payload[4] = (uint8_t)(interval_sec >> 8);
+			payload_len = 5;
+		}
+		int err = bt_gatt_notify(conn, &ble_svc.attrs[4], config_payload, payload_len);
+		if (err) {
+			printk("notify err=%d\n", err);
+		}
+	}
+
+
+    /* Optional: Save to flash whenever it's written */
+    //save_setting_str("app/config", (char *)config_payload);
 
 	return len;
 }
@@ -108,9 +162,11 @@ BT_GATT_SERVICE_DEFINE(ble_svc,
 	BT_GATT_CCC(ccc_cfg_changed,
 		    BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
 	BT_GATT_CHARACTERISTIC(&ble_config_chr_uuid.uuid,
-			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE,
+			       BT_GATT_CHRC_READ | BT_GATT_CHRC_WRITE | BT_GATT_CHRC_NOTIFY,
 			       BT_GATT_PERM_READ | BT_GATT_PERM_WRITE,
-			       NULL, write_config, config_payload),
+			       read_config, write_config, config_payload),
+	BT_GATT_CCC(ccc_cfg_changed,
+		    BT_GATT_PERM_READ | BT_GATT_PERM_WRITE),
 );
 
 /* Advertise service UUID so apps can filter */
@@ -194,12 +250,42 @@ static void send_data_notify(uint16_t uva, uint16_t uvb, uint16_t uvc)
 	}
 }
 
+static void set_default_config()
+{
+	int rc;
+	rc = save_setting_int("app/init", 1);
+	rc = save_setting_int("app/interval_seconds", 10);
+	rc = save_setting_str("app/device_name", "default");
+	if (rc) {
+		printk("Failed to save device name setting: %d\n", rc);
+	}
+}
+
 int main(void)
 {
     const struct device *i2c_dev;
     int ret;
+	int err;
 
 	printk("Boot ver %s\n", APP_FW_VERSION);
+	err = settings_subsys_init();
+	if (err) {
+		printk("settings subsys initialization failed (err %d)\n", err);
+	}
+	err = settings_load();
+	if (err) {
+		printk("settings_load failed (err %d)\n", err);
+	}
+
+	int val;
+	err = load_setting_int("app/init", &val);
+	//if (val >= -999) {
+		set_default_config();
+		settings_load();
+		char buf[32];
+		err = load_setting_str("app/device_name", buf, sizeof(buf));
+		printk("load_setting_str err=%d buf=%s\n", err, buf);
+	//}
 
     i2c_dev = DEVICE_DT_GET(I2C_NODE);
     if (!device_is_ready(i2c_dev)) {
@@ -229,7 +315,7 @@ int main(void)
 
 	uint8_t osr;
 
-	// CONFIG + power-up
+	// CONFIG + power-up AS7331
 	osr = 0x02;
 	i2c_reg_write_byte(i2c_dev, AS7331_ADDR, 0x00, osr);
 
@@ -237,9 +323,6 @@ int main(void)
 
 	int cnt = 0;
 	while(1) {
-		// Dummy read to advance internal state
-		//i2c_reg_write_byte(i2c_dev, AS7331_ADDR, 0x00, osr);
-	
 		// MEASUREMENT + start
 		osr = 0x83;
 		i2c_reg_write_byte(i2c_dev, AS7331_ADDR, 0x00, osr);
@@ -272,7 +355,9 @@ int main(void)
 			printk("UVA=%u UVB=%u UVC=%u wait=%d ms\n", uva, uvb, uvc, j*10);
 			send_data_notify(uva, uvb, uvc);
 		}
-		k_sleep(K_SECONDS(5));
+		int sleep_sec;
+		load_setting_int("app/interval_seconds", &sleep_sec);
+		k_sleep(K_SECONDS(sleep_sec));
 		cnt ++;
 	}
 }

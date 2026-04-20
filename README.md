@@ -45,8 +45,9 @@ Config ID
 |0xC5|Power off timer          |UInt32|power off timer seconds|
 
 Config data format
-| CMD(UInt8) | ID(UInt8) | Length(UInt8) | Data(Variable len) | CMD | ID | Length | Data |...
+| CMD(UInt8) | ID(UInt8) | Length(opt,UInt8) | Data(opt,Variable len) | CMD | ID | Length(opt) | Data(opt) |...
 Use little endian
+Reav Value case, no length, no data (optional)
 
 nRF5340 I2C PIN connection
 | AS7331 Pin | nRF5340-DK Connection | Description |

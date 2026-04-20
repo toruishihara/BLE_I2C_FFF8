@@ -5,8 +5,8 @@
 //  Created by Toru Ishihara on 2026/04/14.
 //
 
-internal import Combine
 import Foundation
+import Combine
 
 @MainActor
 class BLEViewModel: ObservableObject {
@@ -28,7 +28,7 @@ class BLEViewModel: ObservableObject {
     }()
 
     init() {
-        self.bleManager = BLEManager()
+        self.bleManager = BLEManager.shared
         startListening()
     }
 
@@ -38,7 +38,9 @@ class BLEViewModel: ObservableObject {
     
     func startListening() {
         task = Task {
-            for await data in bleManager.stream.stream {
+            for await (data, uuid) in bleManager.stream.stream {
+                guard uuid == CHAR_DATA_UUID else { continue }
+                
                 // Update status with current time
                 status = "Last update: \(dateFormatter.string(from: Date()))"
 
