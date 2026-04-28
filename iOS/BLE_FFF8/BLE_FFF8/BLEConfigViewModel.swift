@@ -43,12 +43,23 @@ enum ConfigValue {
 @MainActor
 class BLEConfigViewModel: ObservableObject {
     private let bleManager: BLEManager
-    @Published var deviceName: String = "-"
+    @Published var deviceName: String = "-" {
+        didSet {
+            deviceNameDirty = true
+        }
+    }
     @Published var timeSec: UInt32 = 0
     @Published var timeUSec: UInt32 = 0
-    @Published var intervalSec: UInt32 = 1
+    @Published var intervalSec: UInt32 = 1 {
+        didSet {
+            intervalSecDirty = true
+        }
+    }
     @Published var intervalUSec: UInt32 = 0
     @Published var powerOffTimer: UInt32 = 1000000
+    private var deviceNameDirty = false
+    private var intervalSecDirty = false
+
     private var task: Task<Void, Never>?
     private var cancellables = Set<AnyCancellable>()
     
@@ -127,4 +138,19 @@ class BLEConfigViewModel: ObservableObject {
             return payload.toUInt32().map { .powerOffTimer($0) }
         }
     }
+    
+    func writeConfigValues() async {
+        if (self.deviceNameDirty) {
+            var data = Data()
+            data.append(CommandID.writeValue.rawValue)
+            data.append(ConfigID.deviceName.rawValue)
+            let len = UInt8(self.deviceName.utf8.count)
+            data.append(len)
+            if let utf8Data = self.deviceName.data(using: .utf8) {
+                data.append(utf8Data)
+            }
+            await bleManager.writeConfigCharAsync(data:data)
+        }
+    }
+
 }

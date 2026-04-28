@@ -34,7 +34,7 @@ static bool notify_enabled;
 
 static struct k_work_delayable adv_restart_work;
 
-extern const struct bt_gatt_service_static ble_svc;
+const struct bt_gatt_service_static ble_svc;
 
 static int adv_start(void);
 
@@ -83,75 +83,7 @@ BT_CONN_CB_DEFINE(conn_cb) = {
 };
 
 static uint8_t data_payload[20];
-static uint8_t config_payload[20];
-
-static ssize_t read_config(struct bt_conn *conn, const struct bt_gatt_attr *attr,
-			 void *buf, uint16_t len, uint16_t offset)
-{
-	printk("read_config (len %u): ", len);
-	for (int i = 0; i < len; i++) {
-		printk("%02X ", ((uint8_t *)buf)[i]);
-	}
-	printk("\n");
-
-	return bt_gatt_attr_read(conn, attr, buf, len, offset, config_payload,
-				 sizeof(config_payload));
-}
-
-static ssize_t write_config(struct bt_conn *conn, const struct bt_gatt_attr *attr,
-			 const void *buf, uint16_t len, uint16_t offset,
-			 uint8_t flags)
-{
-	if (offset + len > sizeof(config_payload)) {
-		return BT_GATT_ERR(BT_ATT_ERR_INVALID_OFFSET);
-	}
-
-	memcpy(config_payload + offset, buf, len);
-	printk("Central write or ask config (len %u): ", len);
-	for (int i = 0; i < len; i++) {
-		printk("%02X ", ((uint8_t *)buf)[i]);
-	}
-	printk("\n");
-	uint8_t cmd = config_payload[0];
-	uint8_t id = config_payload[1];
-
-	if (cmd == 0x11) {// Read value
-		uint8_t payload_len = 0;
-		uint8_t len = 0;
-		config_payload[0] = 0x12; // Read result
-		if (id == 0xc0) {
-			// return device_name setting
-			char device_name[32];
-			load_setting_str("app/device_name", device_name, sizeof(device_name));
-			printk("device_name: %s\n", device_name);
-			len = strlen(device_name);
-			config_payload[1] = id;
-			config_payload[2] = len;
-			memcpy(config_payload + 3, device_name, len);
-			payload_len = 3 + len;
-		} else if (id == 0xc3) {
-			// return interval_seconds setting
-			int interval_sec;
-			len = 2;
-			load_setting_int("app/interval_seconds", &interval_sec);
-			config_payload[1] = id;
-			config_payload[2] = len;
-			config_payload[3] = (uint8_t)(interval_sec & 0xFF);
-			config_payload[4] = (uint8_t)(interval_sec >> 8);
-			payload_len = 5;
-		}
-		int err = bt_gatt_notify(conn, &ble_svc.attrs[4], config_payload, payload_len);
-		if (err) {
-			printk("notify err=%d\n", err);
-		}
-	}
-
-
-    /* Optional: Save to flash whenever it's written */
-    //save_setting_str("app/config", (char *)config_payload);
-
-	return len;
-}
+uint8_t config_payload[20];
 
 BT_GATT_SERVICE_DEFINE(ble_svc,
 	BT_GATT_PRIMARY_SERVICE(&ble_svc_uuid.uuid),
@@ -277,15 +209,15 @@ int main(void)
 		printk("settings_load failed (err %d)\n", err);
 	}
 
-	int val;
+	int val = 0;
 	err = load_setting_int("app/init", &val);
-	//if (val >= -999) {
+	if (val == 0 || err < 0) { // if init config value is 0, default is not set yet.
 		set_default_config();
 		settings_load();
 		char buf[32];
 		err = load_setting_str("app/device_name", buf, sizeof(buf));
 		printk("load_setting_str err=%d buf=%s\n", err, buf);
-	//}
+	}
 
     i2c_dev = DEVICE_DT_GET(I2C_NODE);
     if (!device_is_ready(i2c_dev)) {

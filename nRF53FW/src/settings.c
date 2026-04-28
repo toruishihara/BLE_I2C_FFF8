@@ -1,5 +1,6 @@
 #include <zephyr/settings/settings.h>
 #include <zephyr/sys/printk.h>
+#include <zephyr/bluetooth/att.h>
 #include <string.h>
 #include <errno.h>
 #include "settings.h"
@@ -78,4 +79,82 @@ int load_setting_str(const char *key, char *dest, size_t max_len)
 	}
 
 	return ctx.found ? 0 : -ENOENT;
+}
+
+ssize_t read_config(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+			 void *buf, uint16_t len, uint16_t offset)
+{
+	printk("read_config (len %u): ", len);
+	for (int i = 0; i < len; i++) {
+		printk("%02X ", ((uint8_t *)buf)[i]);
+	}
+	printk("\n");
+
+	return bt_gatt_attr_read(conn, attr, buf, len, offset, config_payload,
+				 sizeof(config_payload));
+}
+
+ssize_t write_config(struct bt_conn *conn, const struct bt_gatt_attr *attr,
+			 const void *buf, uint16_t len, uint16_t offset,
+			 uint8_t flags)
+{
+	if (offset + len > sizeof(config_payload)) {
+		return BT_GATT_ERR(BT_ATT_ERR_INVALID_OFFSET);
+	}
+
+	memcpy(config_payload + offset, buf, len);
+	printk("central read/write config (len %u): ", len);
+	for (int i = 0; i < len; i++) {
+		printk("%02X ", ((uint8_t *)buf)[i]);
+	}
+	printk("\n");
+	uint8_t cmd = config_payload[0];
+	uint8_t id = config_payload[1];
+
+	if (cmd == CONFIG_CMD_READ_VALUE) {
+		uint8_t payload_len = 0;
+		uint8_t len = 0;
+		config_payload[0] = CONFIG_CMD_READ_RESULT;
+		if (id == CONFIG_ID_DEVICE_NAME) {
+			// return device_name setting
+			char device_name[32];
+			load_setting_str("app/device_name", device_name, sizeof(device_name));
+			printk("device_name: %s\n", device_name);
+			len = strlen(device_name);
+			config_payload[1] = id;
+			config_payload[2] = len;
+			memcpy(config_payload + 3, device_name, len);
+			payload_len = 3 + len;
+		} else if (id == CONFIG_ID_SEND_INTERVAL_SEC) {
+			// return interval_seconds setting
+			int interval_sec;
+			len = 2;
+			load_setting_int("app/interval_seconds", &interval_sec);
+			config_payload[1] = id;
+			config_payload[2] = len;
+			config_payload[3] = (uint8_t)(interval_sec & 0xFF);
+			config_payload[4] = (uint8_t)(interval_sec >> 8);
+			payload_len = 5;
+		}
+		int err = bt_gatt_notify(conn, &ble_svc.attrs[4], config_payload, payload_len);
+		if (err) {
+			printk("notify err=%d\n", err);
+		}
+	}
+
+	if (cmd == CONFIG_CMD_WRITE_VALUE) {
+		uint8_t payload_len = config_payload[2];
+
+		if (id == CONFIG_ID_DEVICE_NAME) {
+			settings_save_one("app/device_name", config_payload + 3, payload_len);
+
+			// test only code
+			char tmp[32];
+			load_setting_str("app/device_name", tmp, sizeof(tmp));
+			printk("new device_name: %s\n", tmp);
+
+		}
+	}
+
+	return len;
 }

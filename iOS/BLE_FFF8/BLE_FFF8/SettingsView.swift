@@ -21,10 +21,15 @@ struct SettingsView: View {
                 TextField("Enter text", value: $vm.intervalSec, format: .number)
                     .keyboardType(.numberPad)
             }
-            
             Button("Get config") {
                 Task {
                     await vm.readDeviceName()
+                }
+            }
+            .padding()
+            Button("Write config") {
+                Task {
+                    await vm.writeConfigValues()
                 }
             }
             .padding()
