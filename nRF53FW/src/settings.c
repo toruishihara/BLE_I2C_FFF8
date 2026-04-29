@@ -1,9 +1,12 @@
 #include <zephyr/settings/settings.h>
 #include <zephyr/sys/printk.h>
 #include <zephyr/bluetooth/att.h>
+#include <zephyr/bluetooth/bluetooth.h>
+#include <zephyr/bluetooth/hci.h>
 #include <string.h>
 #include <errno.h>
 #include "settings.h"
+#include <stdio.h>
 
 struct direct_load_ctx {
 	const char *key;
@@ -158,3 +161,50 @@ ssize_t write_config(struct bt_conn *conn, const struct bt_gatt_attr *attr,
 
 	return len;
 }
+
+void make_default_device_name(char *name, size_t len)
+{
+    bt_addr_le_t addrs[CONFIG_BT_ID_MAX];
+    size_t count = CONFIG_BT_ID_MAX;
+
+    bt_id_get(addrs, &count);
+
+    if (count > 0) {
+        const bt_addr_le_t *addr = &addrs[0];
+
+        // addr->a.val is little-endian:
+        // val[0] = LSB, val[5] = MSB
+
+        snprintf(name, len, "sensor_%02X%02X",
+                 addr->a.val[1],  // second byte
+                 addr->a.val[0]); // last byte
+    } else {
+        snprintf(name, len, "sensor_0");
+    }
+}
+
+#define SETTINGS_KEY_DEVICE_NAME            "app/device_name"
+#define SETTINGS_KEY_DEVICE_TIME_SEC        "app/dev_time_sec"
+#define SETTINGS_KEY_DEVICE_TIME_USEC       "app/dev_time_usec"
+#define SETTINGS_KEY_SEND_INTERVAL_SEC      "app/send_interval_sec"
+#define SETTINGS_KEY_SEND_INTERVAL_USEC     "app/send_interval_usec"
+#define SETTINGS_KEY_POWER_OFF_TIMER_SEC    "app/power_off_timer_sec"
+
+void set_default_config()
+{
+	int rc;
+	char buf[20];
+	make_default_device_name(buf, sizeof(buf));
+	printk("set_default_config device_name:%s\n", buf);
+	rc = save_setting_int(SETTINGS_KEY_DEVICE_INIT, 1);
+	rc = save_setting_str(SETTINGS_KEY_DEVICE_NAME, buf);
+	rc = save_setting_int(SETTINGS_KEY_DEVICE_TIME_SEC, 0);
+	rc = save_setting_int(SETTINGS_KEY_DEVICE_TIME_USEC, 0);
+	rc = save_setting_int(SETTINGS_KEY_SEND_INTERVAL_SEC, 10);
+	rc = save_setting_int(SETTINGS_KEY_SEND_INTERVAL_USEC, 0);
+	rc = save_setting_int(SETTINGS_KEY_POWER_OFF_TIMER_SEC, 0);
+	if (rc) {
+		printk("Failed to save device name setting: %d\n", rc);
+	}
+}
+

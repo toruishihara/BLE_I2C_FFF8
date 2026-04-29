@@ -41,6 +41,14 @@ typedef enum {
     CONFIG_ID_POWER_OFF_TIMER_SEC      = 0xC5, // uint32_t (seconds)
 } config_id_t;
 
+#define SETTINGS_KEY_DEVICE_INIT            "app/init"
+#define SETTINGS_KEY_DEVICE_NAME            "app/device_name"
+#define SETTINGS_KEY_DEVICE_TIME_SEC        "app/dev_time_sec"
+#define SETTINGS_KEY_DEVICE_TIME_USEC       "app/dev_time_usec"
+#define SETTINGS_KEY_SEND_INTERVAL_SEC      "app/send_interval_sec"
+#define SETTINGS_KEY_SEND_INTERVAL_USEC     "app/send_interval_usec"
+#define SETTINGS_KEY_POWER_OFF_TIMER_SEC    "app/power_off_timer_sec"
+
 /**
  * @brief Save an integer setting.
  * 
@@ -81,5 +89,8 @@ int load_setting_str(const char *key, char *dest, size_t max_len);
 ssize_t read_config(struct bt_conn *conn, const struct bt_gatt_attr *attr, void *buf, uint16_t len, uint16_t offset);
 
 ssize_t write_config(struct bt_conn *conn, const struct bt_gatt_attr *attr, const void *buf, uint16_t len, uint16_t offset, uint8_t flags);
+
+void set_default_config();
+void make_default_device_name(char *name, size_t len);
 
 #endif /* SETTINGS_H */

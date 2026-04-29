@@ -28,6 +28,8 @@ static struct bt_uuid_16 ble_svc_uuid = BT_UUID_INIT_16(BT_UUID_SERVICE_VAL);
 static struct bt_uuid_16 ble_data_chr_uuid = BT_UUID_INIT_16(BT_UUID_DATA_CHAR_VAL);
 static struct bt_uuid_16 ble_config_chr_uuid = BT_UUID_INIT_16(BT_UUID_CONFIG_CHAR_VAL);
 
+static char s_device_name[20];
+
 // Bluetooth UV Service and Characteristic definitions would go here
 static struct bt_conn *current_conn;
 static bool notify_enabled;
@@ -107,10 +109,10 @@ static const struct bt_data ad[] = {
     BT_DATA_BYTES(BT_DATA_UUID16_ALL, BT_UUID_16_ENCODE(BT_UUID_SERVICE_VAL)),
 };
 
-static const struct bt_data sd[] = {
+static struct bt_data s_sd[] = {
 	BT_DATA(BT_DATA_NAME_COMPLETE,
-    CONFIG_BT_DEVICE_NAME,
-    sizeof(CONFIG_BT_DEVICE_NAME) - 1),
+    s_device_name,
+    sizeof(s_device_name) - 1),
 };
 
 
@@ -131,7 +133,7 @@ static int adv_start(void)
 
 	err = bt_le_adv_start(BT_LE_ADV_CONN,
 			      ad, ARRAY_SIZE(ad),
-			      sd, ARRAY_SIZE(sd));
+			      s_sd, ARRAY_SIZE(s_sd));
 	if (err) {
 		printk("Advertising failed (err %d)\n", err);
 		return err;
@@ -152,7 +154,7 @@ static int ble_init(void)
 	printk("bt_enable success\n");
 	printk("BLE name: %s\n", bt_get_name());
 
-	return adv_start();
+	return 0;
 }
 
 static void send_data_notify(uint16_t uva, uint16_t uvb, uint16_t uvc)
@@ -182,17 +184,6 @@ static void send_data_notify(uint16_t uva, uint16_t uvb, uint16_t uvc)
 	}
 }
 
-static void set_default_config()
-{
-	int rc;
-	rc = save_setting_int("app/init", 1);
-	rc = save_setting_int("app/interval_seconds", 10);
-	rc = save_setting_str("app/device_name", "default");
-	if (rc) {
-		printk("Failed to save device name setting: %d\n", rc);
-	}
-}
-
 int main(void)
 {
     const struct device *i2c_dev;
@@ -211,12 +202,10 @@ int main(void)
 
 	int val = 0;
 	err = load_setting_int("app/init", &val);
+	err = -1; // test only
 	if (val == 0 || err < 0) { // if init config value is 0, default is not set yet.
 		set_default_config();
 		settings_load();
-		char buf[32];
-		err = load_setting_str("app/device_name", buf, sizeof(buf));
-		printk("load_setting_str err=%d buf=%s\n", err, buf);
 	}
 
     i2c_dev = DEVICE_DT_GET(I2C_NODE);
@@ -233,6 +222,20 @@ int main(void)
 		return 0;
 	}
     printk("BLE ready\n");
+
+	load_setting_str("app/device_name", s_device_name, sizeof(s_device_name));
+	printk("chk device_name: %s\n", s_device_name);
+	if (strncmp(s_device_name, "sensor_0", 20) == 0) {
+		make_default_device_name(s_device_name, sizeof(s_device_name));
+		save_setting_str(SETTINGS_KEY_DEVICE_NAME, s_device_name);
+		printk("new device_name: %s\n", s_device_name);
+	}
+	
+	/* Update advertising name data */
+	s_sd[0].data_len = strlen(s_device_name);
+	s_sd[0].data = (const uint8_t *)s_device_name;
+
+	adv_start();
 
 	// State check for AS7331
 	uint8_t reg = 0x00;   // example ID register
